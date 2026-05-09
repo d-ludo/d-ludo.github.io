@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ludo Vic — Expert en Cybersecurite</title>
+  <title>Ludovic DOURESSAMY &mdash; Expert en Cybers&eacute;curit&eacute;</title>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --purple: #7c6af7;
-      --bg: #0a0a0f;
-      --bg2: #111118;
-      --border: #1e1e2e;
-      --border2: #2a2a3e;
-      --text: #e8e6f0;
-      --muted: #666;
-      --dim: #444;
+      --purple: #5b4fe8;
+      --purple-light: #ede9ff;
+      --bg: #ffffff;
+      --bg2: #f7f7fb;
+      --border: #e8e8f0;
+      --border2: #d0d0e0;
+      --text: #111118;
+      --muted: #777;
+      --dim: #aaa;
     }
 
     body {
@@ -36,7 +37,7 @@
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
-      background: rgba(10,10,15,0.92);
+      background: rgba(255,255,255,0.92);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       z-index: 100;
@@ -96,6 +97,7 @@
       line-height: 1.05;
       margin-bottom: 1.5rem;
       letter-spacing: -0.02em;
+      color: var(--text);
     }
 
     .accent { color: var(--purple); }
@@ -125,6 +127,7 @@
       letter-spacing: 0.03em;
       transition: opacity 0.2s;
       display: inline-block;
+      border-radius: 4px;
     }
 
     .btn-primary:hover { opacity: 0.85; }
@@ -139,9 +142,10 @@
       letter-spacing: 0.03em;
       transition: border-color 0.2s;
       display: inline-block;
+      border-radius: 4px;
     }
 
-    .btn-outline:hover { border-color: var(--purple); }
+    .btn-outline:hover { border-color: var(--purple); color: var(--purple); }
 
     .stats-row {
       display: flex;
@@ -196,18 +200,18 @@
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
+      gap: 12px;
     }
 
     .project-card {
-      background: var(--bg);
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
       padding: 1.5rem;
-      transition: background 0.2s;
+      transition: border-color 0.2s;
     }
 
-    .project-card:hover { background: var(--bg2); }
+    .project-card:hover { border-color: var(--purple); }
 
     .project-type {
       font-family: 'Courier New', monospace;
@@ -244,18 +248,20 @@
       padding: 3px 8px;
       border: 1px solid var(--border2);
       color: var(--muted);
+      border-radius: 3px;
+      background: var(--bg);
     }
 
     .ctf-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
+      gap: 12px;
     }
 
     .ctf-card {
-      background: var(--bg);
+      background: var(--purple-light);
+      border: 1px solid #d4ceff;
+      border-radius: 8px;
       padding: 1.5rem;
     }
 
@@ -277,7 +283,7 @@
     .ctf-org {
       font-family: 'Courier New', monospace;
       font-size: 11px;
-      color: var(--dim);
+      color: var(--muted);
     }
 
     .skills-list {
@@ -295,10 +301,16 @@
       letter-spacing: 0.04em;
       transition: border-color 0.2s, color 0.2s;
       cursor: default;
+      border-radius: 4px;
+      background: var(--bg);
     }
 
-    .skill-pill:hover { border-color: var(--purple); color: var(--text); }
-    .skill-pill.hl { border-color: var(--purple); color: var(--purple); }
+    .skill-pill:hover { border-color: var(--purple); color: var(--purple); }
+    .skill-pill.hl {
+      border-color: var(--purple);
+      color: var(--purple);
+      background: var(--purple-light);
+    }
 
     footer {
       border-top: 1px solid var(--border);
@@ -308,6 +320,7 @@
       font-size: 11px;
       color: var(--dim);
       letter-spacing: 0.08em;
+      background: var(--bg2);
     }
 
     footer .cmd { color: var(--purple); display: block; margin-bottom: 0.5rem; }
@@ -327,7 +340,7 @@
   <nav>
     <div class="nav-logo">// Ludo Vic</div>
     <ul class="nav-links">
-      <li><a href="#about">A propos</a></li>
+      <li><a href="#about">&#192; propos</a></li>
       <li><a href="#projects">Projets</a></li>
       <li><a href="#ctf">CTF</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -336,23 +349,23 @@
 
   <div class="hero" id="about">
     <div class="hero-tag">Disponible &mdash; Open to work</div>
-    <h1>Expert en<br><span class="accent">Cybersecurite</span></h1>
+    <h1>Expert en<br><span class="accent">Cybers&eacute;curit&eacute;</span></h1>
     <p class="hero-desc">
-      Apprenti ingenieur cyber chez Enterlance, specialise en analyse de logs, SIEM et detection d'incidents. Je construis des environnements de securite reels chez moi pour aller toujours plus loin.
+      Apprenti ing&eacute;nieur cyber chez Enterlance, sp&eacute;cialis&eacute; en analyse de logs, SIEM et d&eacute;tection d&rsquo;incidents. Je construis des environnements de s&eacute;curit&eacute; r&eacute;els chez moi pour aller toujours plus loin.
     </p>
     <div class="hero-cta">
-      <a href="#" class="btn-primary">Telecharger le CV</a>
+      <a href="#" class="btn-primary">T&eacute;l&eacute;charger le CV</a>
       <a href="mailto:ludovic.douressamy@proton.me" class="btn-outline">Me contacter &rarr;</a>
     </div>
 
     <div class="stats-row">
       <div>
         <div class="stat-number">2</div>
-        <div class="stat-label">Ans d'alternance</div>
+        <div class="stat-label">Ans d&rsquo;alternance</div>
       </div>
       <div>
         <div class="stat-number">2</div>
-        <div class="stat-label">CTF remportes</div>
+        <div class="stat-label">CTF remport&eacute;s</div>
       </div>
       <div>
         <div class="stat-number">4</div>
@@ -360,7 +373,7 @@
       </div>
       <div>
         <div class="stat-number">Bac+5</div>
-        <div class="stat-label">Mastere Cyber</div>
+        <div class="stat-label">Master&egrave; Cyber</div>
       </div>
     </div>
   </div>
@@ -371,7 +384,7 @@
       <div class="project-card">
         <div class="project-type">Home Lab</div>
         <h3>SOC personnel sous Wazuh</h3>
-        <p>Mise en place d'un SIEM avec regles de detection basees sur MITRE ATT&amp;CK et dashboards de supervision.</p>
+        <p>Mise en place d&rsquo;un SIEM avec r&egrave;gles de d&eacute;tection bas&eacute;es sur MITRE ATT&amp;CK et dashboards de supervision.</p>
         <div class="project-tags">
           <span class="tag">Wazuh</span>
           <span class="tag">MITRE ATT&amp;CK</span>
@@ -380,8 +393,8 @@
       </div>
       <div class="project-card">
         <div class="project-type">Pro &rarr; Home Lab</div>
-        <h3>Scanner de vulnerabilites automatise</h3>
-        <p>Outil developpe en home lab, teste et finalement deploye en environnement professionnel.</p>
+        <h3>Scanner de vuln&eacute;rabilit&eacute;s automatis&eacute;</h3>
+        <p>Outil d&eacute;velopp&eacute; en home lab, test&eacute; et finalement d&eacute;ploy&eacute; en environnement professionnel.</p>
         <div class="project-tags">
           <span class="tag">Automatisation</span>
           <span class="tag">Vuln scanning</span>
@@ -390,17 +403,17 @@
       <div class="project-card">
         <div class="project-type">Home Lab</div>
         <h3>Firewall Fortinet (FortiGate)</h3>
-        <p>Configuration d'un FortiGate pour securiser mes flux reseau et simuler un environnement d'entreprise realiste.</p>
+        <p>Configuration d&rsquo;un FortiGate pour s&eacute;curiser mes flux r&eacute;seau et simuler un environnement d&rsquo;entreprise r&eacute;aliste.</p>
         <div class="project-tags">
           <span class="tag">Fortinet</span>
           <span class="tag">Firewall</span>
-          <span class="tag">Reseau</span>
+          <span class="tag">R&eacute;seau</span>
         </div>
       </div>
       <div class="project-card">
         <div class="project-type">Home Lab</div>
         <h3>Cluster Hyper-V Core</h3>
-        <p>Deploiement d'un cluster de virtualisation pour heberger l'ensemble de mes environnements de lab.</p>
+        <p>D&eacute;ploiement d&rsquo;un cluster de virtualisation pour h&eacute;berger l&rsquo;ensemble de mes environnements de lab.</p>
         <div class="project-tags">
           <span class="tag">Hyper-V</span>
           <span class="tag">Virtualisation</span>
@@ -411,23 +424,23 @@
   </section>
 
   <section id="ctf">
-    <div class="section-label">CTF &mdash; Competitions</div>
+    <div class="section-label">CTF &mdash; Comp&eacute;titions</div>
     <div class="ctf-grid">
       <div class="ctf-card">
         <div class="ctf-rank">#1</div>
         <div class="ctf-name">Boss of the SOC 2025</div>
-        <div class="ctf-org">Organise par Splunk</div>
+        <div class="ctf-org">Organis&eacute; par Splunk</div>
       </div>
       <div class="ctf-card">
         <div class="ctf-rank">#1</div>
         <div class="ctf-name">Hacktoberfest 2023</div>
-        <div class="ctf-org">Organise par Nibble Security</div>
+        <div class="ctf-org">Organis&eacute; par Nibble Security</div>
       </div>
     </div>
   </section>
 
   <section>
-    <div class="section-label">Competences</div>
+    <div class="section-label">Comp&eacute;tences</div>
     <div class="skills-list">
       <span class="skill-pill hl">SIEM &mdash; Splunk / Wazuh</span>
       <span class="skill-pill hl">Analyse de logs &amp; alertes SOC</span>
@@ -438,13 +451,13 @@
       <span class="skill-pill">Active Directory</span>
       <span class="skill-pill">ISO 27001</span>
       <span class="skill-pill">Hyper-V</span>
-      <span class="skill-pill">Scan de vulnerabilites</span>
+      <span class="skill-pill">Scan de vuln&eacute;rabilit&eacute;s</span>
     </div>
   </section>
 
   <footer id="contact">
-    <span class="cmd">$ ./contact.sh &mdash; ludovic.douressamy@proton.me</span>
-    Fait avec passion &mdash; deploye sur GitHub Pages
+    <span class="cmd">$ &mdash; ludovic.douressamy@proton.me</span>
+    Fait avec passion &mdash; d&eacute;ploy&eacute; sur GitHub Pages
   </footer>
 
 </body>
