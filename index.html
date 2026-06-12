@@ -3,462 +3,563 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ludovic DOURESSAMY &mdash; Expert en Cybers&eacute;curit&eacute;</title>
+  <title>Ludovic DOURESSAMY — Analyste SOC &amp; Cybersécurité</title>
+  <meta name="description" content="Apprenti ingénieur cybersécurité — SIEM, analyse de logs, détection d'incidents. Portfolio, projets home lab et CTF.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --purple: #5b4fe8;
-      --purple-light: #ede9ff;
       --bg: #ffffff;
-      --bg2: #f7f7fb;
-      --border: #e8e8f0;
-      --border2: #d0d0e0;
-      --text: #111118;
-      --muted: #777;
-      --dim: #aaa;
+      --panel: #fafaf8;
+      --panel-2: #f4f4f1;
+      --border: #e4e4de;
+      --border-soft: #ecece7;
+      --text: #16181d;
+      --muted: #5d6470;
+      --dim: #9aa0ab;
+      --accent: #f0561a;          /* orange signal */
+      --accent-soft: rgba(240,86,26,.08);
+      --ok: #178a4c;              /* sévérité basse */
+      --warn: #b07d10;            /* sévérité moyenne */
+      --crit: #d6453a;            /* sévérité haute */
+      --font-display: 'Archivo', sans-serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
     }
 
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-family: var(--font-body);
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
+      background-image:
+        radial-gradient(900px 500px at 80% -10%, rgba(240,86,26,.05), transparent 60%);
     }
 
     a { text-decoration: none; color: inherit; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
+    .wrap { max-width: 1020px; margin: 0 auto; padding: 0 24px; }
+
+    /* ---------- NAV ---------- */
     nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 2rem;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      background: rgba(255,255,255,0.92);
+      position: sticky; top: 0; z-index: 100;
+      border-bottom: 1px solid var(--border-soft);
+      background: rgba(255,255,255,.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      z-index: 100;
     }
-
+    .nav-inner {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 24px; max-width: 1020px; margin: 0 auto;
+    }
     .nav-logo {
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      color: var(--purple);
-      letter-spacing: 0.05em;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 700;
+      letter-spacing: .04em; color: var(--text);
+      display: flex; align-items: center; gap: 10px;
     }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--ok);
+      box-shadow: 0 0 0 3px rgba(23,138,76,.15);
+      animation: pulse 2.4s ease-in-out infinite;
     }
-
+    @keyframes pulse { 50% { box-shadow: 0 0 0 6px rgba(23,138,76,.06); } }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
     .nav-links a {
-      font-size: 13px;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-      transition: color 0.2s;
+      font-family: var(--font-mono); font-size: 12px; color: var(--muted);
+      letter-spacing: .06em; transition: color .2s;
     }
+    .nav-links a:hover { color: var(--accent); }
 
-    .nav-links a:hover { color: var(--text); }
-
+    /* ---------- HERO ---------- */
     .hero {
-      padding: 5rem 2rem 4rem;
-      max-width: 860px;
-      margin: 0 auto;
+      display: grid; grid-template-columns: 1.05fr .95fr;
+      gap: 48px; align-items: center;
+      padding: 88px 0 64px;
     }
-
     .hero-tag {
-      font-family: 'Courier New', monospace;
-      font-size: 11px;
-      color: var(--purple);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--ok);
+      border: 1px solid rgba(23,138,76,.3);
+      background: rgba(23,138,76,.06);
+      padding: 6px 12px; border-radius: 100px;
+      margin-bottom: 22px;
     }
-
-    .hero-tag::before {
-      content: '';
-      display: inline-block;
-      width: 20px;
-      height: 1px;
-      background: var(--purple);
-    }
-
+    .hero-tag::before { content: '●'; font-size: 8px; }
     h1 {
-      font-size: clamp(2.4rem, 6vw, 4rem);
-      font-weight: 800;
-      line-height: 1.05;
-      margin-bottom: 1.5rem;
-      letter-spacing: -0.02em;
-      color: var(--text);
+      font-family: var(--font-display);
+      font-size: clamp(2.3rem, 5.2vw, 3.6rem);
+      font-weight: 800; line-height: 1.04; letter-spacing: -.02em;
+      margin-bottom: 20px;
     }
-
-    .accent { color: var(--purple); }
-
+    .accent { color: var(--accent); }
     .hero-desc {
-      font-size: 1rem;
-      color: var(--muted);
-      line-height: 1.8;
-      max-width: 580px;
-      margin-bottom: 2.5rem;
+      font-size: 1rem; color: var(--muted); line-height: 1.75;
+      max-width: 480px; margin-bottom: 32px;
     }
-
-    .hero-cta {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
+    .hero-desc strong { color: var(--text); font-weight: 600; }
+    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
     .btn-primary {
-      padding: 0.8rem 1.6rem;
-      background: var(--purple);
-      color: #fff;
-      border: none;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      letter-spacing: 0.03em;
-      transition: opacity 0.2s;
-      display: inline-block;
-      border-radius: 4px;
+      font-family: var(--font-body); font-size: 14px; font-weight: 600;
+      padding: 12px 22px; border-radius: 6px; border: none; cursor: pointer;
+      background: var(--accent); color: #fff;
+      transition: transform .15s, box-shadow .15s; display: inline-block;
     }
-
-    .btn-primary:hover { opacity: 0.85; }
-
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(240,86,26,.3); }
     .btn-outline {
-      padding: 0.8rem 1.6rem;
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border2);
-      font-size: 14px;
-      cursor: pointer;
-      letter-spacing: 0.03em;
-      transition: border-color 0.2s;
-      display: inline-block;
-      border-radius: 4px;
+      font-family: var(--font-mono); font-size: 13px;
+      padding: 12px 22px; border-radius: 6px; cursor: pointer;
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border); display: inline-block;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ---------- TERMINAL (signature) ---------- */
+    .terminal {
+      /* le terminal reste sombre : contraste signature dans la page claire */
+      --panel-2: #161d28;
+      --border: #243044;
+      --text: #e8eef6;
+      --muted: #97a4b6;
+      --dim: #5b6878;
+      --accent: #ff8a3d;
+      --ok: #46c178;
+      --warn: #e3b341;
+      --crit: #f4625a;
+      background: #0e141d;
+      border: 1px solid #1d2839;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(15,23,42,.22);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+    .term-bar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 14px;
+      background: var(--panel-2);
+      border-bottom: 1px solid var(--border);
+    }
+    .term-bar .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); }
+    .term-bar .dot:nth-child(1) { background: var(--crit); }
+    .term-bar .dot:nth-child(2) { background: var(--warn); }
+    .term-bar .dot:nth-child(3) { background: var(--ok); }
+    .term-title {
+      margin-left: 8px; color: var(--dim); font-size: 11px; letter-spacing: .05em;
+    }
+    .term-body { padding: 16px 16px 18px; min-height: 246px; }
+    .log-line {
+      display: flex; gap: 10px; padding: 4px 0;
+      line-height: 1.5; opacity: 0; transform: translateY(4px);
+      animation: logIn .35s ease forwards;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    @keyframes logIn { to { opacity: 1; transform: translateY(0); } }
+    .log-time { color: var(--dim); flex-shrink: 0; }
+    .sev { flex-shrink: 0; width: 44px; font-weight: 700; }
+    .sev-info { color: var(--dim); }
+    .sev-ok   { color: var(--ok); }
+    .sev-med  { color: var(--warn); }
+    .sev-high { color: var(--crit); }
+    .sev-crit { color: var(--accent); }
+    .log-msg  { color: var(--muted); overflow: hidden; text-overflow: ellipsis; }
+    .log-msg b { color: var(--text); font-weight: 500; }
+    .log-line.is-alert .log-msg { color: var(--text); }
+    .cursor {
+      display: inline-block; width: 8px; height: 14px;
+      background: var(--accent); vertical-align: middle;
+      animation: blink 1s steps(1) infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ---------- METRICS ---------- */
+    .metrics {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+      padding: 0 0 72px;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--border-soft);
+      border-radius: 10px;
+      padding: 20px 22px;
+    }
+    .metric-num {
+      font-family: var(--font-mono); font-size: 1.9rem; font-weight: 700;
+      color: var(--accent); line-height: 1;
+    }
+    .metric-label {
+      font-family: var(--font-mono); font-size: 10px; color: var(--dim);
+      letter-spacing: .12em; text-transform: uppercase; margin-top: 10px;
     }
 
-    .btn-outline:hover { border-color: var(--purple); color: var(--purple); }
-
-    .stats-row {
-      display: flex;
-      gap: 3rem;
-      margin-top: 3.5rem;
-      padding-top: 3rem;
-      border-top: 1px solid var(--border);
-      flex-wrap: wrap;
-    }
-
-    .stat-number {
-      font-family: 'Courier New', monospace;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--purple);
-    }
-
-    .stat-label {
-      font-size: 11px;
-      color: var(--dim);
-      margin-top: 4px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    section {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
-      border-top: 1px solid var(--border);
-    }
-
+    /* ---------- SECTIONS ---------- */
+    section { padding: 72px 0; border-top: 1px solid var(--border-soft); }
     .section-label {
-      font-family: 'Courier New', monospace;
-      font-size: 11px;
-      color: var(--dim);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 2.5rem;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      font-family: var(--font-mono); font-size: 11px; color: var(--accent);
+      letter-spacing: .16em; text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .section-label::before { content: '// '; color: var(--dim); }
+    .section-title {
+      font-family: var(--font-display); font-size: 1.7rem; font-weight: 700;
+      letter-spacing: -.01em; margin-bottom: 36px;
     }
 
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
+    /* ---------- PROJECTS ---------- */
     .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 12px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
     }
-
     .project-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.5rem;
-      transition: border-color 0.2s;
+      background: var(--panel);
+      border: 1px solid var(--border-soft);
+      border-radius: 10px;
+      padding: 24px;
+      transition: border-color .2s, transform .2s;
+      position: relative;
     }
-
-    .project-card:hover { border-color: var(--purple); }
-
+    .project-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(22,24,29,.06); }
     .project-type {
-      font-family: 'Courier New', monospace;
-      font-size: 10px;
-      color: var(--purple);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 0.75rem;
+      font-family: var(--font-mono); font-size: 10px; color: var(--ok);
+      letter-spacing: .12em; text-transform: uppercase; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
     }
-
+    .project-type.deployed { color: var(--accent); }
     .project-card h3 {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 0.6rem;
-      color: var(--text);
+      font-family: var(--font-display); font-size: 1.05rem; font-weight: 700;
+      margin-bottom: 10px;
     }
-
     .project-card p {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 1rem;
+      font-size: 13.5px; color: var(--muted); line-height: 1.7; margin-bottom: 16px;
     }
-
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
+    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
     .tag {
-      font-family: 'Courier New', monospace;
-      font-size: 10px;
-      padding: 3px 8px;
-      border: 1px solid var(--border2);
-      color: var(--muted);
-      border-radius: 3px;
+      font-family: var(--font-mono); font-size: 10.5px;
+      padding: 4px 10px; border-radius: 4px;
+      border: 1px solid var(--border); color: var(--muted);
       background: var(--bg);
     }
 
-    .ctf-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
+    /* ---------- CTF ---------- */
+    .ctf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .ctf-card {
-      background: var(--purple-light);
-      border: 1px solid #d4ceff;
-      border-radius: 8px;
-      padding: 1.5rem;
+      position: relative;
+      background: linear-gradient(135deg, var(--accent-soft), transparent 55%), var(--panel);
+      border: 1px solid rgba(240,86,26,.28);
+      border-radius: 10px;
+      padding: 26px 24px;
+      overflow: hidden;
     }
-
     .ctf-rank {
-      font-family: 'Courier New', monospace;
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--purple);
-      margin-bottom: 0.5rem;
+      font-family: var(--font-mono); font-size: 2.4rem; font-weight: 700;
+      color: var(--accent); line-height: 1; margin-bottom: 14px;
     }
-
     .ctf-name {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.3rem;
-      color: var(--text);
+      font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .ctf-org { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); }
+    .ctf-badge {
+      position: absolute; top: 22px; right: 22px;
+      font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--ok); border: 1px solid rgba(23,138,76,.35);
+      background: rgba(23,138,76,.07);
+      padding: 4px 10px; border-radius: 100px;
     }
 
-    .ctf-org {
-      font-family: 'Courier New', monospace;
-      font-size: 11px;
-      color: var(--muted);
+    /* ---------- SKILLS ---------- */
+    .skills-group { margin-bottom: 28px; }
+    .skills-group:last-child { margin-bottom: 0; }
+    .skills-group-label {
+      font-family: var(--font-mono); font-size: 11px; color: var(--dim);
+      letter-spacing: .1em; text-transform: uppercase; margin-bottom: 12px;
     }
-
-    .skills-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
+    .skills-list { display: flex; flex-wrap: wrap; gap: 8px; }
     .skill-pill {
-      font-family: 'Courier New', monospace;
-      font-size: 11px;
-      padding: 6px 14px;
-      border: 1px solid var(--border2);
-      color: var(--muted);
-      letter-spacing: 0.04em;
-      transition: border-color 0.2s, color 0.2s;
+      font-family: var(--font-mono); font-size: 12px;
+      padding: 8px 16px; border-radius: 6px;
+      border: 1px solid var(--border); color: var(--muted);
+      background: var(--panel);
+      transition: border-color .2s, color .2s;
       cursor: default;
-      border-radius: 4px;
-      background: var(--bg);
     }
-
-    .skill-pill:hover { border-color: var(--purple); color: var(--purple); }
+    .skill-pill:hover { border-color: var(--muted); color: var(--text); }
     .skill-pill.hl {
-      border-color: var(--purple);
-      color: var(--purple);
-      background: var(--purple-light);
+      border-color: rgba(240,86,26,.4); color: var(--accent);
+      background: var(--accent-soft);
     }
 
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem;
+    /* ---------- CONTACT / FOOTER ---------- */
+    .contact-box {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 48px 40px;
       text-align: center;
-      font-family: 'Courier New', monospace;
-      font-size: 11px;
-      color: var(--dim);
-      letter-spacing: 0.08em;
-      background: var(--bg2);
+    }
+    .contact-box h2 {
+      font-family: var(--font-display); font-size: 1.8rem; font-weight: 800;
+      letter-spacing: -.01em; margin-bottom: 12px;
+    }
+    .contact-box p { color: var(--muted); font-size: 15px; margin-bottom: 28px; }
+    footer {
+      border-top: 1px solid var(--border-soft);
+      padding: 28px 24px;
+      text-align: center;
+      font-family: var(--font-mono); font-size: 11px; color: var(--dim);
+      letter-spacing: .06em;
+    }
+    footer .cmd { color: var(--accent); }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 840px) {
+      .hero { grid-template-columns: 1fr; gap: 40px; padding: 56px 0 48px; }
+      .metrics { grid-template-columns: repeat(2, 1fr); padding-bottom: 56px; }
+      .projects-grid, .ctf-grid { grid-template-columns: 1fr; }
+      section { padding: 56px 0; }
+      .nav-links { gap: 16px; }
+      .nav-links li:first-child { display: none; }
     }
 
-    footer .cmd { color: var(--purple); display: block; margin-bottom: 0.5rem; }
-
-    @media (max-width: 600px) {
-      nav { padding: 1rem; }
-      .nav-links { gap: 1rem; }
-      .hero { padding: 3rem 1rem 2rem; }
-      section { padding: 3rem 1rem; }
-      .ctf-grid { grid-template-columns: 1fr; }
-      .stats-row { gap: 1.5rem; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .log-line { opacity: 1; transform: none; }
+      html { scroll-behavior: auto; }
     }
   </style>
 </head>
 <body>
 
   <nav>
-    <div class="nav-logo">// Ludovic DOURESSAMY</div>
-    <ul class="nav-links">
-      <li><a href="#about">&#192; à propos</a></li>
-      <li><a href="#projects">Projets</a></li>
-      <li><a href="#ctf">CTF</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo"><span class="status-dot" aria-hidden="true"></span>ludovic@soc:~$</a>
+      <ul class="nav-links">
+        <li><a href="#about">À propos</a></li>
+        <li><a href="#projects">Projets</a></li>
+        <li><a href="#ctf">CTF</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
   </nav>
 
-  <div class="hero" id="about">
-    <div class="hero-tag">Disponible &mdash; Open to work</div>
-    <h1>Expert en<br><span class="accent">Cybers&eacute;curit&eacute;</span></h1>
-    <p class="hero-desc">
-      Apprenti ing&eacute;nieur cyber chez Enterlance, sp&eacute;cialis&eacute; en analyse de logs, SIEM et d&eacute;tection d&rsquo;incidents. Je construis des environnements de s&eacute;curit&eacute; r&eacute;els chez moi pour aller toujours plus loin.
-    </p>
-    <div class="hero-cta">
-      <a href="#" class="btn-primary">T&eacute;l&eacute;charger le CV</a>
-      <a href="mailto:ludovic.douressamy@proton.me" class="btn-outline">Me contacter &rarr;</a>
-    </div>
+  <main class="wrap">
 
-    <div class="stats-row">
+    <!-- HERO -->
+    <div class="hero" id="about">
       <div>
-        <div class="stat-number">2</div>
-        <div class="stat-label">Ans d&rsquo;alternance</div>
-      </div>
-      <div>
-        <div class="stat-number">2</div>
-        <div class="stat-label">CTF remport&eacute;s</div>
-      </div>
-      <div>
-        <div class="stat-number">4</div>
-        <div class="stat-label">Projets Home Lab</div>
-      </div>
-      <div>
-        <div class="stat-number">Bac+5</div>
-        <div class="stat-label">Master&egrave; Cyber</div>
-      </div>
-    </div>
-  </div>
-
-  <section id="projects">
-    <div class="section-label">Projets</div>
-    <div class="projects-grid">
-      <div class="project-card">
-        <div class="project-type">Home Lab</div>
-        <h3>SOC personnel sous Wazuh</h3>
-        <p>Mise en place d&rsquo;un SIEM avec r&egrave;gles de d&eacute;tection bas&eacute;es sur MITRE ATT&amp;CK et dashboards de supervision.</p>
-        <div class="project-tags">
-          <span class="tag">Wazuh</span>
-          <span class="tag">MITRE ATT&amp;CK</span>
-          <span class="tag">SIEM</span>
+        <span class="hero-tag">Disponible — open to work</span>
+        <h1>Je détecte les incidents<br><span class="accent">avant qu'ils ne coûtent cher.</span></h1>
+        <p class="hero-desc">
+          Apprenti ingénieur cybersécurité chez <strong>Unédic</strong>, spécialisé en
+          <strong>analyse de logs, SIEM et détection d'incidents</strong>.
+          Je construis des environnements de sécurité réels dans mon home lab
+          pour aller toujours plus loin que la théorie.
+        </p>
+        <div class="hero-cta">
+          <a href="#" class="btn-primary">Télécharger le CV</a>
+          <a href="mailto:ludovic.douressamy@proton.me" class="btn-outline">./contact --me</a>
         </div>
       </div>
-      <div class="project-card">
-        <div class="project-type">Pro &rarr; Home Lab</div>
-        <h3>Scanner de vuln&eacute;rabilit&eacute;s automatis&eacute;</h3>
-        <p>Outil d&eacute;velopp&eacute; en home lab, test&eacute; et finalement d&eacute;ploy&eacute; en environnement professionnel.</p>
-        <div class="project-tags">
-          <span class="tag">Automatisation</span>
-          <span class="tag">Vuln scanning</span>
+
+      <!-- Signature : flux de logs SOC -->
+      <div class="terminal" aria-label="Simulation d'un flux de logs SIEM">
+        <div class="term-bar">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="term-title">wazuh — tail -f /var/ossec/logs/alerts.log</span>
         </div>
-      </div>
-      <div class="project-card">
-        <div class="project-type">Home Lab</div>
-        <h3>Firewall Fortinet (FortiGate)</h3>
-        <p>Configuration d&rsquo;un FortiGate pour s&eacute;curiser mes flux r&eacute;seau et simuler un environnement d&rsquo;entreprise r&eacute;aliste.</p>
-        <div class="project-tags">
-          <span class="tag">Fortinet</span>
-          <span class="tag">Firewall</span>
-          <span class="tag">R&eacute;seau</span>
-        </div>
-      </div>
-      <div class="project-card">
-        <div class="project-type">Home Lab</div>
-        <h3>Cluster Hyper-V Core</h3>
-        <p>D&eacute;ploiement d&rsquo;un cluster de virtualisation pour h&eacute;berger l&rsquo;ensemble de mes environnements de lab.</p>
-        <div class="project-tags">
-          <span class="tag">Hyper-V</span>
-          <span class="tag">Virtualisation</span>
-          <span class="tag">Infrastructure</span>
-        </div>
+        <div class="term-body" id="logStream"></div>
       </div>
     </div>
-  </section>
 
-  <section id="ctf">
-    <div class="section-label">CTF &mdash; Comp&eacute;titions</div>
-    <div class="ctf-grid">
-      <div class="ctf-card">
-        <div class="ctf-rank">#1</div>
-        <div class="ctf-name">Boss of the SOC 2025</div>
-        <div class="ctf-org">Organis&eacute; par Splunk</div>
+    <!-- METRICS -->
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-num">2</div>
+        <div class="metric-label">Ans d'alternance</div>
       </div>
-      <div class="ctf-card">
-        <div class="ctf-rank">#1</div>
-        <div class="ctf-name">Hacktoberfest 2023</div>
-        <div class="ctf-org">Organis&eacute; par Nibble Security</div>
+      <div class="metric">
+        <div class="metric-num">2×#1</div>
+        <div class="metric-label">CTF remportés</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">4</div>
+        <div class="metric-label">Projets home lab</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">Bac+5</div>
+        <div class="metric-label">Mastère cyber</div>
       </div>
     </div>
-  </section>
 
-  <section>
-    <div class="section-label">Comp&eacute;tences</div>
-    <div class="skills-list">
-      <span class="skill-pill hl">SIEM &mdash; Splunk / Wazuh</span>
-      <span class="skill-pill hl">Analyse de logs &amp; alertes SOC</span>
-      <span class="skill-pill hl">MITRE ATT&amp;CK</span>
-      <span class="skill-pill hl">Analyse des IOC</span>
-      <span class="skill-pill">Fortinet / FortiGate</span>
-      <span class="skill-pill">EDR / XDR</span>
-      <span class="skill-pill">Active Directory</span>
-      <span class="skill-pill">ISO 27001</span>
-      <span class="skill-pill">Hyper-V</span>
-      <span class="skill-pill">Scan de vuln&eacute;rabilit&eacute;s</span>
-    </div>
-  </section>
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="section-label">Projets</div>
+      <h2 class="section-title">Du home lab à la production</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-type">Home lab</div>
+          <h3>SOC personnel sous Wazuh</h3>
+          <p>Mise en place d'un SIEM complet : règles de détection basées sur MITRE ATT&amp;CK, dashboards de supervision et triage d'alertes.</p>
+          <div class="project-tags">
+            <span class="tag">Wazuh</span>
+            <span class="tag">MITRE ATT&amp;CK</span>
+            <span class="tag">SIEM</span>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-type deployed">Home lab → déployé en entreprise</div>
+          <h3>Scanner de vulnérabilités automatisé</h3>
+          <p>Outil développé et testé en home lab, puis déployé en environnement professionnel chez Unédic.</p>
+          <div class="project-tags">
+            <span class="tag">Automatisation</span>
+            <span class="tag">Vuln scanning</span>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-type">Home lab</div>
+          <h3>Firewall Fortinet (FortiGate)</h3>
+          <p>Configuration d'un FortiGate pour sécuriser mes flux réseau et simuler un environnement d'entreprise réaliste.</p>
+          <div class="project-tags">
+            <span class="tag">Fortinet</span>
+            <span class="tag">Firewall</span>
+            <span class="tag">Réseau</span>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-type">Home lab</div>
+          <h3>Cluster Hyper-V Core</h3>
+          <p>Déploiement d'un cluster de virtualisation pour héberger l'ensemble de mes environnements de lab.</p>
+          <div class="project-tags">
+            <span class="tag">Hyper-V</span>
+            <span class="tag">Virtualisation</span>
+            <span class="tag">Infrastructure</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <footer id="contact">
-    <span class="cmd">$ &mdash; ludovic.douressamy@proton.me</span>
-    Fait avec passion &mdash; d&eacute;ploy&eacute; sur GitHub Pages
+    <!-- CTF -->
+    <section id="ctf">
+      <div class="section-label">Compétitions</div>
+      <h2 class="section-title">CTF — incidents résolus en premier</h2>
+      <div class="ctf-grid">
+        <div class="ctf-card">
+          <span class="ctf-badge">1ère place</span>
+          <div class="ctf-rank">#1</div>
+          <div class="ctf-name">Boss of the SOC 2025</div>
+          <div class="ctf-org">Organisé par Splunk</div>
+        </div>
+        <div class="ctf-card">
+          <span class="ctf-badge">1ère place</span>
+          <div class="ctf-rank">#1</div>
+          <div class="ctf-name">Hacktoberfest 2023</div>
+          <div class="ctf-org">Organisé par Nibble Security</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="section-label">Compétences</div>
+      <h2 class="section-title">Stack &amp; expertise</h2>
+
+      <div class="skills-group">
+        <div class="skills-group-label">Cœur de métier — Blue Team</div>
+        <div class="skills-list">
+          <span class="skill-pill hl">SIEM — Splunk / Wazuh</span>
+          <span class="skill-pill hl">Analyse de logs &amp; alertes SOC</span>
+          <span class="skill-pill hl">MITRE ATT&amp;CK</span>
+          <span class="skill-pill hl">Analyse des IOC</span>
+        </div>
+      </div>
+
+      <div class="skills-group">
+        <div class="skills-group-label">Infrastructure &amp; outils</div>
+        <div class="skills-list">
+          <span class="skill-pill">Fortinet / FortiGate</span>
+          <span class="skill-pill">EDR / XDR</span>
+          <span class="skill-pill">Active Directory</span>
+          <span class="skill-pill">Hyper-V</span>
+          <span class="skill-pill">Scan de vulnérabilités</span>
+          <span class="skill-pill">ISO 27001</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="contact-box">
+        <h2>Un poste, une mission, une question&nbsp;?</h2>
+        <p>Je réponds vite — comme sur une alerte de sévérité critique.</p>
+        <a href="mailto:ludovic.douressamy@proton.me" class="btn-primary">ludovic.douressamy@proton.me</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span class="cmd">$</span> Fait avec passion — déployé sur GitHub Pages
   </footer>
+
+  <script>
+    (function () {
+      var stream = document.getElementById('logStream');
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      var logs = [
+        { sev: 'INFO', cls: 'sev-info', src: 'wazuh-agent', msg: 'Authentification réussie — <b>srv-ad01</b>' },
+        { sev: 'LOW',  cls: 'sev-ok',   src: 'fortigate',   msg: 'Flux sortant autorisé 10.0.2.14 → :443' },
+        { sev: 'MED',  cls: 'sev-med',  src: 'sysmon',      msg: 'Process inhabituel : <b>powershell.exe -enc</b>' },
+        { sev: 'HIGH', cls: 'sev-high', src: 'wazuh',       msg: 'Règle <b>T1059.001</b> déclenchée (MITRE ATT&CK)' },
+        { sev: 'OK',   cls: 'sev-ok',   src: 'analyste',    msg: 'Incident trié, contenu en <b>6 min</b> ✓' },
+        { sev: 'INFO', cls: 'sev-info', src: 'portfolio',   msg: 'Nouveau visiteur détecté…' },
+        { sev: 'CRIT', cls: 'sev-crit', src: 'portfolio',   msg: '<b>Opportunité détectée → contactez Ludovic</b>', alert: true }
+      ];
+
+      function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+      function makeLine(log) {
+        var d = new Date();
+        var el = document.createElement('div');
+        el.className = 'log-line' + (log.alert ? ' is-alert' : '');
+        el.innerHTML =
+          '<span class="log-time">[' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()) + ']</span>' +
+          '<span class="sev ' + log.cls + '">' + log.sev + '</span>' +
+          '<span class="log-msg">' + log.src + ' — ' + log.msg + '</span>';
+        return el;
+      }
+
+      if (reduced) {
+        logs.forEach(function (log) { stream.appendChild(makeLine(log)); });
+        return;
+      }
+
+      var i = 0;
+      function next() {
+        if (i < logs.length) {
+          stream.appendChild(makeLine(logs[i]));
+          i++;
+          setTimeout(next, i === logs.length - 1 ? 1100 : 550 + Math.random() * 500);
+        } else {
+          var c = document.createElement('span');
+          c.className = 'cursor';
+          c.setAttribute('aria-hidden', 'true');
+          stream.appendChild(c);
+        }
+      }
+      setTimeout(next, 400);
+    })();
+  </script>
 
 </body>
 </html>
